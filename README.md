@@ -6,6 +6,20 @@ Azure Network Security Group Deployment
 
 This module manages an Azure network security group (NSG).
 
+### Versions
+
+Terraform: 1.1.7
+
+AzureRM Provider: 3.4.1
+
+Validated Cloud: Government
+
+FedRAMP Compliance Level: Mod/High
+
+DoD Impact Compliance Level: N/A
+
+Other Compliance Levels: N/A
+
 ## Resource List
 
 - Network Security Group
@@ -37,7 +51,6 @@ This module manages an Azure network security group (NSG).
 | destination_address_prefix | Destination address prefix to be applied to all predefined rules | list(string) | ["*"] | no |
 | destination_address_prefixes | Destination address prefixes to be applied to all predefined rules | list(string) | null | no |
 
-
 ## Outputs
 
 | Name | Description |
@@ -54,7 +67,7 @@ This module is a complement to the [Azure Network](https://registry.terraform.io
 
 This module includes a a set of pre-defined rules for commonly used protocols (for example HTTP or ActiveDirectory) that can be used directly in their corresponding modules or as independent rules.
 
-**NOTE:** `source_address_prefix` is defined differently in `predefined_rules` and `custom_rules`. 
+**NOTE:** `source_address_prefix` is defined differently in `predefined_rules` and `custom_rules`.
 `predefined_rules` uses `var.source_address_prefix` defined in the module.`var.source_address_prefix` is of type list(string), but allowed only one element (CIDR, `*`, source IP range or Tags). For more source_address_prefixes, please use `var.source_address_prefixes`. The same for `var.destination_address_prefix` in `predefined_rules`.
 `custom_rules` uses `source_address_prefix` defined in the block `custom_rules`. `source_address_prefix` is of type string (CIDR, `*`, source IP range or Tags). For more source_address_prefixes, please use `source_address_prefixes` in block `custom_rules`. The same for `destination_address_prefix` in `custom_rules`.
 
