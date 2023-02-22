@@ -60,7 +60,7 @@ Other Compliance Levels: N/A
 
 ## Additional Information
 
-This Terraform module deploys a Network Security Group (NSG) in Azure and optionally attach it to the specified vnets.
+This Terraform module deploys a Network Security Group (NSG) in Azure and optionally attach it to the specified VNets.
 
 This module is a complement to the [Azure Network](https://registry.terraform.io/modules/Azure/network/azurerm) module. Use the network_security_group_id from the output of this module to apply it to a subnet in the Azure Network module.
 **NOTE**: We are working on adding the support for applying a NSG to a network interface directly as a future enhancement.
@@ -74,8 +74,8 @@ This module includes a a set of pre-defined rules for commonly used protocols (f
 ## Usage
 
 ```hcl
-module "towerinstance-nsg" {
-  source = "../../../../modules/azurerm-network-security-group"
+module "tower-nsg" {
+  source = "github.com/Coalfire-CF/ACE-Azure-NSG?ref=v1.0.0"
 
   resource_group_name           = data.terraform_remote_state.setup.outputs.network_rg_name
   security_group_name           = "${local.resource_prefix}-tower-nsg"
