@@ -1,4 +1,4 @@
-# Azure Network Security Group
+# terraform-azurerm-nsg
 
 Azure Network Security Group Deployment
 
@@ -6,57 +6,12 @@ Azure Network Security Group Deployment
 
 This module manages an Azure network security group (NSG).
 
-### Versions
-
-Terraform: 1.1.7
-
-AzureRM Provider: 3.4.1
-
-Validated Cloud: Government
-
-FedRAMP Compliance Level: Mod/High
-
-DoD Impact Compliance Level: N/A
-
-Other Compliance Levels: N/A
-
 ## Resource List
 
 - Network Security Group
 - Default Rules e.g `deny all`
 - Network Watcher Flow Log
 - Diagnostic settings
-
-## Inputs
-
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:-----:|
-| resource_group_name | Azure Resource Group resource will be deployed in | string | N/A | yes |
-| diag_log_analytics_id | ID of the Log Analytics Workspace diagnostic logs should be sent to | string | N/A | yes |
-| regional_tags | Regional level tags | map(string) | {} | yes |
-| global_tags | Global level tags | map(string) | {} | yes |
-| storage_account_flowlogs_id | The ID of the Storage Account where flow logs are stored | string | N/A | yes |
-| network_watcher_name | The name of the Network Watcher | string | N/A | yes |
-| network_watcher_flow_log_name | The name of the Network Watcher Flow Log | string | N/A | yes |
-| diag_log_analytics_workspace_id | LAW Workspace ID (GUID) for traffic analytics logs | string | N/A | yes |
-| security_group_name | Network security group name | string | nsg | no |
-| network_watcher_flow_log_location | Location (Azure Region) for the network watcher flow logs | string | usgovvirginia | no |
-| location | The Azure location/region to create resources in. If not specified, uses RG location | string | "" | no |
-| nsg_tags | Key/Value tags that should be added to NSG | map(string) | {} | no |
-| flowlog_tags | Key/Value tags that should be added to Flow Logs | map(string) | {} | no |
-| predefined_rules | Set of built-in rule such as SSH or HTTPS | list(map) | [] | no |
-| custom_rules | Security rules for the network security group using this format name = [priority, direction, access, protocol, source_port_range, destination_port_range, source_address_prefix, destination_address_prefix, description] |  list(map) | [] | no |
-| source_address_prefix | Source address prefix to be applied to all predefined rules | list(string) | ["*"] | no |
-| source_address_prefixes | Source address prefixes to be applied to all predefined rules | list(string) | null | no |
-| destination_address_prefix | Destination address prefix to be applied to all predefined rules | list(string) | ["*"] | no |
-| destination_address_prefixes | Destination address prefixes to be applied to all predefined rules | list(string) | null | no |
-
-## Outputs
-
-| Name | Description |
-|------|-------------|
-| network_security_group_id | The id for the nsg resource |
-| network_security_group_name | The name for the nsg resource |
 
 ## Additional Information
 
