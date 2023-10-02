@@ -105,32 +105,30 @@ module "tower-nsg" {
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
-| Name | Version |
-|------|---------|
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | 3.4.0 |
+No requirements.
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.4.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | n/a |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_diag"></a> [diag](#module\_diag) | github.com/Coalfire-CF/ACE-Azure-Diagnostics | v1.0.1 |
+| <a name="module_diag"></a> [diag](#module\_diag) | github.com/Coalfire-CF/ACE-Azure-Diagnostics | n/a |
 
 ## Resources
 
 | Name | Type |
 |------|------|
-| [azurerm_network_security_group.nsg](https://registry.terraform.io/providers/hashicorp/azurerm/3.4.0/docs/resources/network_security_group) | resource |
-| [azurerm_network_security_rule.custom_rules](https://registry.terraform.io/providers/hashicorp/azurerm/3.4.0/docs/resources/network_security_rule) | resource |
-| [azurerm_network_security_rule.default_denyall](https://registry.terraform.io/providers/hashicorp/azurerm/3.4.0/docs/resources/network_security_rule) | resource |
-| [azurerm_network_security_rule.predefined_rules](https://registry.terraform.io/providers/hashicorp/azurerm/3.4.0/docs/resources/network_security_rule) | resource |
-| [azurerm_network_watcher_flow_log.nsg-flowlogs](https://registry.terraform.io/providers/hashicorp/azurerm/3.4.0/docs/resources/network_watcher_flow_log) | resource |
-| [azurerm_resource_group.nsg](https://registry.terraform.io/providers/hashicorp/azurerm/3.4.0/docs/data-sources/resource_group) | data source |
+| [azurerm_network_security_group.nsg](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_security_group) | resource |
+| [azurerm_network_security_rule.custom_rules](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_security_rule) | resource |
+| [azurerm_network_security_rule.default_denyall](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_security_rule) | resource |
+| [azurerm_network_security_rule.predefined_rules](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_security_rule) | resource |
+| [azurerm_network_watcher_flow_log.nsg-flowlogs](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_watcher_flow_log) | resource |
+| [azurerm_resource_group.nsg](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/resource_group) | data source |
 
 ## Inputs
 
