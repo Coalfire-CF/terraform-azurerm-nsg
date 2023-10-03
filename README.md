@@ -31,6 +31,15 @@ This module includes a a set of pre-defined rules for commonly used protocols (f
 `predefined_rules` uses `var.source_address_prefix` defined in the module.`var.source_address_prefix` is of type list(string), but allowed only one element (CIDR, `*`, source IP range or Tags). For more source_address_prefixes, please use `var.source_address_prefixes`. The same for `var.destination_address_prefix` in `predefined_rules`.
 `custom_rules` uses `source_address_prefix` defined in the block `custom_rules`. `source_address_prefix` is of type string (CIDR, `*`, source IP range or Tags). For more source_address_prefixes, please use `source_address_prefixes` in block `custom_rules`. The same for `destination_address_prefix` in `custom_rules`.
 
+## Deployment Steps
+
+This module can be called as outlined below.
+
+- Change directories to the `bastion` directory.
+- From the `/terraform/prod/us-va/mgmt/bastion` directory run `terraform init`.
+- Run `terraform plan` to review the resources being created.
+- If everything looks correct in the plan output, run `terraform apply`.
+
 ## Usage
 
 ```hcl
