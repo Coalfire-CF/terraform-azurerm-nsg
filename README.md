@@ -1,10 +1,15 @@
+![Coalfire](coalfire_logo.png)
+
 # terraform-azurerm-nsg
 
-Azure Network Security Group Deployment
+This module is used in the [Coalfire-Azure-RAMPpak](https://github.com/Coalfire-CF/Coalfire-Azure-RAMPpak) FedRAMP Framework. It will create a Network Security Group (NSG).
 
-## Description
+Learn more at [Coalfire OpenSource](https://coalfire.com/opensource).
 
-This module manages an Azure network security group (NSG).
+## Dependencies
+
+- Security Core
+- Region Setup
 
 ## Resource List
 
@@ -29,77 +34,45 @@ This module includes a a set of pre-defined rules for commonly used protocols (f
 ## Usage
 
 ```hcl
-module "tower-nsg" {
-  source = "github.com/Coalfire-CF/ACE-Azure-NSG?ref=v1.0.0"
+provider "azurerm" {
+  features {}
+}
 
-  resource_group_name           = data.terraform_remote_state.setup.outputs.network_rg_name
-  security_group_name           = "${local.resource_prefix}-tower-nsg"
-  storage_account_flowlogs_id   = data.terraform_remote_state.setup.outputs.storage_account_flowlogs_id
-  network_watcher_name          = data.terraform_remote_state.setup.outputs.network_watcher_name
-  network_watcher_flow_log_name = "${local.resource_prefix}-tower-nfl"
-  global_tags                   = var.global_tags
-  regional_tags                 = var.regional_tags
-  diag_log_analytics_id         = data.terraform_remote_state.core.outputs.core_la_id
-  nsg_tags = {
-    Function = "CICD"
-    Plane    = "Management"
-  }
+module "win_bastion_nsg" {
+  source = "github.com/Coalfire-CF/terraform-azurerm-nsg"
+
+  location                          = var.location
+  resource_group_name               = data.terraform_remote_state.setup.outputs.network_rg_name
+  security_group_name               = "${local.vm_name_prefix}-winbastion"
+  storage_account_flowlogs_id       = data.terraform_remote_state.setup.outputs.storage_account_flowlogs_id
+  network_watcher_name              = data.terraform_remote_state.setup.outputs.network_watcher_name
+  network_watcher_flow_log_name     = "${data.terraform_remote_state.setup.outputs.network_watcher_name}-windowsbastionflowlogs"
+  network_watcher_flow_log_location = var.location
+  diag_log_analytics_id             = data.terraform_remote_state.core.outputs.core_la_id
+  diag_log_analytics_workspace_id   = data.terraform_remote_state.core.outputs.core_la_workspace_id
+
+  regional_tags = var.regional_tags
+  global_tags   = var.global_tags
 
   custom_rules = [
     {
-      name                    = "SSH"
-      priority                = "1000"
+      name                    = "RDP"
+      priority                = "100"
       direction               = "Inbound"
       access                  = "Allow"
       protocol                = "Tcp"
-      destination_port_range  = "22"
-      source_address_prefixes = [var.mgmt_network_cidr]
-      description             = "SSH"
-    },
-    {
-      name                    = "HTTPS"
-      priority                = "1100"
-      direction               = "Inbound"
-      access                  = "Allow"
-      protocol                = "Tcp"
-      destination_port_range  = "443"
-      source_address_prefixes = [var.mgmt_network_cidr]
-      description             = "HTTPS"
-    },
-    {
-      name                    = "DSM"
-      priority                = "3100"
-      direction               = "Inbound"
-      access                  = "Allow"
-      protocol                = "Tcp"
-      destination_port_range  = "4118"
-      source_address_prefixes = [var.mgmt_network_cidr]
-      description             = "Trend DSM bidirectional port for Linux VMs"
-    },
-    {
-      name                    = "EgressAll"
-      priority                = "1200"
-      direction               = "Outbound"
-      access                  = "Allow"
-      protocol                = "*"
-      destination_port_range  = "*"
-      source_address_prefixes = ["0.0.0.0/0"]
-      description             = "Allow Egress"
-    }
-  ]
-
-  #Example with predefined rules
-  predefined_rules = [
-    {
-      name     = "SSH"
-      priority = "500"
-    },
-    {
-      name              = "LDAP"
-      source_port_range = "1024-1026"
+      destination_port_range  = "3389"
+      source_address_prefixes = var.cidrs_for_remote_access
+      description             = "RDP"
     }
   ]
 }
+
+resource "azurerm_subnet_network_security_group_association" "win_bastion_nsg_association" {
+  subnet_id                 = data.terraform_remote_state.usgv_mgmt_vnet.outputs.usgv_mgmt_vnet_subnet_ids["${local.resource_prefix}-bastion-sn-1"]
+  network_security_group_id = module.win_bastion_nsg.network_security_group_id
+}
+
 ```
 
 <!-- BEGIN_TF_DOCS -->
@@ -162,3 +135,19 @@ No requirements.
 | <a name="output_network_security_group_id"></a> [network\_security\_group\_id](#output\_network\_security\_group\_id) | n/a |
 | <a name="output_network_security_group_name"></a> [network\_security\_group\_name](#output\_network\_security\_group\_name) | n/a |
 <!-- END_TF_DOCS -->
+
+## Contributing
+
+[Start Here](CONTRIBUTING.md)
+
+## License
+
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/license/mit/)
+
+## Contact Us
+
+[Coalfire](https://coalfire.com/)
+
+### Copyright
+
+Copyright © 2023 Coalfire Systems Inc.
