@@ -107,7 +107,7 @@ resource "azurerm_network_watcher_flow_log" "nsg-flowlogs" {
 }
 
 module "diag" {
-  source                = "github.com/Coalfire-CF/ACE-Azure-Diagnostics"
+  source                = "github.com/Coalfire-CF/terraform-azurerm-diagnostics?ref=v1.0.0"
   diag_log_analytics_id = var.diag_log_analytics_id
   resource_id           = azurerm_network_security_group.nsg.id
   resource_type         = "nsg"
