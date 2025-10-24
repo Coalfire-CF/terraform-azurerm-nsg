@@ -160,3 +160,175 @@ No requirements.
 ### Copyright
 
 Copyright © 2023 Coalfire Systems Inc.
+## Tree
+```
+.
+|-- CONTRIBUTING.md
+|-- LICENSE
+|-- License.md
+|-- README.md
+|-- coalfire_logo.png
+|-- main.tf
+|-- modules
+|   |-- ActiveDirectory
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- Base
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- Bastion
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- Cassandra
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- Cassandra-JMX
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- Cassandra-Thrift
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- Config
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- CouchDB
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- CouchDB-HTTPS
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- DNS-TCP
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- DNS-UDP
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- DynamicPorts
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- ElasticSearch
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- FTP
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- HTTP
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- HTTPS
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- IMAP
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- IMAPS
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- Kestrel
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- LDAP
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- MSSQL
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- Memcached
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- MongoDB
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- MySQL
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- Neo4J
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- POP3
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- POP3S
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- PostgreSQL
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- RDP
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- RabbitMQ
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- Redis
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- Riak
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- Riak-JMX
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- SMTP
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- SMTPS
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- SSH
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- WinRM
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- _template
+|   |   |-- main.tf
+|   |   |-- output.tf
+|   |   |-- variables.tf
+|   |-- test
+|       |-- main.tf
+|-- output.tf
+|-- release-please-config.json
+|-- rules.tf
+|-- scripts
+|   |-- create-modules.sh
+|   |-- read-buildingblocks.py
+|-- variables.tf
+```
