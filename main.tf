@@ -77,35 +77,6 @@ resource "azurerm_network_security_rule" "default_denyall" {
   network_security_group_name = azurerm_network_security_group.nsg.name
 }
 
-#################
-#   Flow Logs   #
-#################
-
-resource "azurerm_network_watcher_flow_log" "nsg-flowlogs" {
-  name                      = var.network_watcher_flow_log_name
-  network_watcher_name      = var.network_watcher_name
-  resource_group_name       = data.azurerm_resource_group.nsg.name
-  location                  = var.network_watcher_flow_log_location
-  network_security_group_id = azurerm_network_security_group.nsg.id
-  storage_account_id        = var.storage_account_flowlogs_id
-  enabled                   = true
-  version                   = 2
-  retention_policy {
-    enabled = true
-    days    = 365
-  }
-
-  traffic_analytics {
-    enabled               = true
-    workspace_id          = var.diag_log_analytics_workspace_id
-    workspace_region      = data.azurerm_resource_group.nsg.location
-    workspace_resource_id = var.diag_log_analytics_id
-    interval_in_minutes   = 10
-  }
-
-  tags = merge(var.flowlog_tags, var.regional_tags, var.global_tags)
-}
-
 module "diag" {
   source                = "git::https://github.com/Coalfire-CF/terraform-azurerm-diagnostics?ref=v1.1.4"
   diag_log_analytics_id = var.diag_log_analytics_id
