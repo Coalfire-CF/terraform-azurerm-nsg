@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.1.1](https://github.com/Coalfire-CF/terraform-azurerm-nsg/compare/v1.1.0...v1.1.1) (2025-11-19)
+
+
+### Miscellaneous
+
+* remove old LICENSE file ([5f5185c](https://github.com/Coalfire-CF/terraform-azurerm-nsg/commit/5f5185cf02693dfc90ecd9f38076806af51c1948))
+* remove old LICENSE file ([d70be56](https://github.com/Coalfire-CF/terraform-azurerm-nsg/commit/d70be568e6b2240dcecf433dc690a6ba86379a4e))
+* update README tree ([139c9a2](https://github.com/Coalfire-CF/terraform-azurerm-nsg/commit/139c9a240a3fa8e3723bc60efaf004344e0ab27c))
+
 ## [1.1.0](https://github.com/Coalfire-CF/terraform-azurerm-nsg/compare/v1.0.0...v1.1.0) (2025-11-05)
 
 
