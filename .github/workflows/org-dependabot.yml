@@ -9,10 +9,11 @@ permissions:
 
 jobs:
   refresh:
-    uses: Coalfire-CF/Actions/.github/workflows/org-dependabot.yml@v0.3.1
+    uses: Coalfire-CF/Actions/.github/workflows/org-dependabot.yml@v0.3.2
     with:
       head_branch: ${{ github.head_ref || github.ref_name }}  # PR head, or current branch if not a PR
       include_github_actions: "true"
       default_interval: "daily"
       depb_path: ".github/dependabot.yml"
+      exclude_paths: "modules/*"
       commit_message: "chore: refresh dependabot.yml & TF sources"
