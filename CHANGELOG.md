@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.2](https://github.com/Coalfire-CF/terraform-azurerm-nsg/compare/v1.1.1...v1.1.2) (2026-03-12)
+
+
+### Miscellaneous
+
+* mass update push by coalforge ([4abb579](https://github.com/Coalfire-CF/terraform-azurerm-nsg/commit/4abb5799dab9ff1fe135df01c6e00dc734a31c91))
+* update PR template ([6c96be5](https://github.com/Coalfire-CF/terraform-azurerm-nsg/commit/6c96be5ea725b577174b770e662743d003f85894))
+
 ## [1.1.1](https://github.com/Coalfire-CF/terraform-azurerm-nsg/compare/v1.1.0...v1.1.1) (2026-03-10)
 
 
