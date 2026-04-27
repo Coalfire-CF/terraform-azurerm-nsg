@@ -78,7 +78,7 @@ resource "azurerm_network_security_rule" "default_denyall" {
 }
 
 module "diag" {
-  source                = "git::https://github.com/Coalfire-CF/terraform-azurerm-diagnostics?ref=v1.1.4"
+  source                = "git::https://github.com/Coalfire-CF/terraform-azurerm-diagnostics?ref=v1.1.5"
   diag_log_analytics_id = var.diag_log_analytics_id
   resource_id           = azurerm_network_security_group.nsg.id
   resource_type         = "nsg"
