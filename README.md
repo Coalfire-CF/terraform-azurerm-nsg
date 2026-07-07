@@ -159,7 +159,9 @@ No requirements.
 ### Copyright
 
 Copyright © 2023 Coalfire Systems Inc.
+
 ## Tree
+
 ```text
 .
 |-- CHANGELOG.md
