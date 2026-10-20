@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/Coalfire-CF/terraform-azurerm-nsg/compare/v2.0.0...v2.0.1) (2026-10-20)
+
+
+### Miscellaneous
+
+* **deps:** bump the org-actions group across 1 directory with 7 updates ([#133](https://github.com/Coalfire-CF/terraform-azurerm-nsg/issues/133)) ([57f0a88](https://github.com/Coalfire-CF/terraform-azurerm-nsg/commit/57f0a8892574d23c00dbc00d6bc30d54236f07b2))
+
 ## [2.0.0](https://github.com/Coalfire-CF/terraform-azurerm-nsg/compare/v1.1.2...v2.0.0) (2026-10-20)
 
 
