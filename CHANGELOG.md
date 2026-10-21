@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.0.0](https://github.com/Coalfire-CF/terraform-azurerm-nsg/compare/v2.0.1...v3.0.0) (2026-10-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* require Terraform 1.16.6 and azurerm 5.10 ([#137](https://github.com/Coalfire-CF/terraform-azurerm-nsg/issues/137))
+
+### Features
+
+* require Terraform 1.16.6 and azurerm 5.10 ([#137](https://github.com/Coalfire-CF/terraform-azurerm-nsg/issues/137)) ([3c6d0f2](https://github.com/Coalfire-CF/terraform-azurerm-nsg/commit/3c6d0f262b18274d18031984eb2193d28dd808ab))
+
 ## [2.0.1](https://github.com/Coalfire-CF/terraform-azurerm-nsg/compare/v2.0.0...v2.0.1) (2026-10-20)
 
 
