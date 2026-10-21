@@ -2,85 +2,79 @@
 
 # terraform-azurerm-nsg
 
-This module is used in the [Coalfire-Azure-RAMPpak](https://github.com/Coalfire-CF/Coalfire-Azure-RAMPpak) FedRAMP Framework. It will create a Network Security Group (NSG).
+This module creates a Network Security Group (NSG) with predefined and custom rules, a final DenyAll
+rule, and diagnostic settings. It is used in the [Coalfire-Azure-RAMPpak](https://github.com/Coalfire-CF/Coalfire-Azure-RAMPpak) FedRAMP framework.
 
 Learn more at [Coalfire OpenSource](https://coalfire.com/opensource).
 
 ## Dependencies
 
-- Security Core
-- Region Setup
+- An existing resource group. The NSG takes its location from it.
+- A Log Analytics workspace for diagnostic logs.
 
 ## Resource List
 
 - Network Security Group
-- Default Rules e.g `deny all`
-- Network Watcher Flow Log
-- Diagnostic settings
+- Predefined rules, picked by name from the catalog in `rules.tf`
+- Custom rules
+- DenyAll inbound rule at priority 4096
+- Diagnostic settings, through [terraform-azurerm-diagnostics](https://github.com/Coalfire-CF/terraform-azurerm-diagnostics)
 
-## Additional Information
+## Secure defaults
 
-This Terraform module deploys a Network Security Group (NSG) in Azure and optionally attach it to the specified VNets.
+- With no rule inputs the NSG has only the DenyAll inbound rule.
+- Predefined rules take their source from `source_address_prefixes`, which defaults to `VirtualNetwork`, not `*`.
+- A rule that allows port 22, 3389, 5985 or 5986 from `*`, `Any`, `Internet`, or any `/0` prefix such as `0.0.0.0/0` or `::/0` fails at plan time.
+- Custom rules must name a source and a destination port. There is no wildcard default for either.
+- Rule names and priorities must be unique. Priorities run from 100 to 4095.
 
-This module is a complement to the [Azure Network](https://registry.terraform.io/modules/Azure/network/azurerm) module. Use the network_security_group_id from the output of this module to apply it to a subnet in the Azure Network module.
-**NOTE**: We are working on adding the support for applying a NSG to a network interface directly as a future enhancement.
+## Flow logs
 
-This module includes a a set of pre-defined rules for commonly used protocols (for example HTTP or ActiveDirectory) that can be used directly in their corresponding modules or as independent rules.
+This module does not create flow logs. Azure no longer allows new NSG flow logs. Use VNet flow logs
+in [terraform-azurerm-vnet](https://github.com/Coalfire-CF/terraform-azurerm-vnet) instead.
 
-**NOTE:** `source_address_prefix` is defined differently in `predefined_rules` and `custom_rules`.
-`predefined_rules` uses `var.source_address_prefix` defined in the module.`var.source_address_prefix` is of type list(string), but allowed only one element (CIDR, `*`, source IP range or Tags). For more source_address_prefixes, please use `var.source_address_prefixes`. The same for `var.destination_address_prefix` in `predefined_rules`.
-`custom_rules` uses `source_address_prefix` defined in the block `custom_rules`. `source_address_prefix` is of type string (CIDR, `*`, source IP range or Tags). For more source_address_prefixes, please use `source_address_prefixes` in block `custom_rules`. The same for `destination_address_prefix` in `custom_rules`.
+## Predefined and custom rules
 
-## Deployment Steps
+A predefined rule needs a `name` from the catalog and a `priority`. It may override the source or
+destination for that rule. One address entry uses the singular Azure argument and may be a service
+tag. Two or more entries must be CIDRs or IPs.
 
-This module can be called as outlined below.
+A custom rule takes `destination_port_range` as a port, a range, a comma-separated list, or `*`. It
+takes exactly one of `source_address_prefix`, `source_address_prefixes` or
+`source_application_security_group_ids`.
 
-- Change directories to the `bastion` directory.
-- From the `/terraform/prod/us-va/mgmt/bastion` directory run `terraform init`.
-- Run `terraform plan` to review the resources being created.
-- If everything looks correct in the plan output, run `terraform apply`.
+Attach the NSG to subnets with the `nsg_ids` input of terraform-azurerm-vnet.
 
 ## Usage
 
 ```hcl
-provider "azurerm" {
-  features {}
-}
+module "app_nsg" {
+  source = "git::https://github.com/Coalfire-CF/terraform-azurerm-nsg?ref=vX.Y.Z"
 
-module "win_bastion_nsg" {
-  source = "github.com/Coalfire-CF/terraform-azurerm-nsg"
+  resource_group_name   = var.network_rg_name
+  security_group_name   = "app-nsg"
+  diag_log_analytics_id = var.diag_log_analytics_id
 
-  location                          = var.location
-  resource_group_name               = data.terraform_remote_state.setup.outputs.network_rg_name
-  security_group_name               = "${local.vm_name_prefix}-winbastion"
-  storage_account_flowlogs_id       = data.terraform_remote_state.setup.outputs.storage_account_flowlogs_id
-  network_watcher_name              = data.terraform_remote_state.setup.outputs.network_watcher_name
-  network_watcher_flow_log_name     = "${data.terraform_remote_state.setup.outputs.network_watcher_name}-windowsbastionflowlogs"
-  network_watcher_flow_log_location = var.location
-  diag_log_analytics_id             = data.terraform_remote_state.core.outputs.core_la_id
-  diag_log_analytics_workspace_id   = data.terraform_remote_state.core.outputs.core_la_workspace_id
-
-  regional_tags = var.regional_tags
-  global_tags   = var.global_tags
+  predefined_rules = [
+    { name = "HTTPS", priority = 200 },
+  ]
 
   custom_rules = [
     {
-      name                    = "RDP"
-      priority                = "100"
+      name                    = "SSH"
+      priority                = 100
       direction               = "Inbound"
-      access                  = "Allow"
       protocol                = "Tcp"
-      destination_port_range  = "3389"
-      source_address_prefixes = var.cidrs_for_remote_access
-      description             = "RDP"
-    }
+      destination_port_range  = "22"
+      source_address_prefixes = var.management_cidrs
+      description             = "SSH from the management network"
+    },
   ]
-}
 
-resource "azurerm_subnet_network_security_group_association" "win_bastion_nsg_association" {
-  subnet_id                 = data.terraform_remote_state.usgv_mgmt_vnet.outputs.usgv_mgmt_vnet_subnet_ids["${local.resource_prefix}-bastion-sn-1"]
-  network_security_group_id = module.win_bastion_nsg.network_security_group_id
+  tags          = var.tags
+  regional_tags = var.regional_tags
+  global_tags   = var.global_tags
 }
-
 ```
 
+See `examples/default` for a complete root.

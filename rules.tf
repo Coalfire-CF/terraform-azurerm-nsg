@@ -1,133 +1,131 @@
-variable "rules" {
-  description = "Standard set of predefined rules"
-  type        = map(any)
+# Catalog of predefined rules. Callers pick entries by name in var.predefined_rules.
+# Source and destination addresses come from the caller, never from this catalog.
+locals {
+  rule_catalog = {
 
-  # [direction, access, protocol, source_port_range, destination_port_range, description]"
-  # The following info are in the submodules: source_address_prefix, destination_address_prefix
-  default = {
     #Nessus
-    SSHfromBurp = ["Inbound", "Allow", "TCP", "*", "22", "SSHfromBurp"]
-    WMIfromBurp = ["Inbound", "Allow", "TCP", "*", "445,139", "WMIfromBurp"]
+    SSHfromBurp = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["22"], description = "SSHfromBurp" }
+    WMIfromBurp = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["445", "139"], description = "WMIfromBurp" }
 
     #Tower
-    TowerLinux   = ["Inbound", "Allow", "TCP", "*", "22", "TowerLinux"]
-    TowerWindows = ["Inbound", "Allow", "TCP", "*", "5985-5986", "TowerWindows"]
+    TowerLinux   = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["22"], description = "TowerLinux" }
+    TowerWindows = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["5985-5986"], description = "TowerWindows" }
 
     #ActiveDirectory
-    ActiveDirectory-AllowADReplication          = ["Inbound", "Allow", "*", "*", "389", "AllowADReplication"]
-    ActiveDirectory-AllowADReplicationSSL       = ["Inbound", "Allow", "*", "*", "636", "AllowADReplicationSSL"]
-    ActiveDirectory-AllowADGCReplication        = ["Inbound", "Allow", "TCP", "*", "3268", "AllowADGCReplication"]
-    ActiveDirectory-AllowADGCReplicationSSL     = ["Inbound", "Allow", "TCP", "*", "3269", "AllowADGCReplicationSSL"]
-    ActiveDirectory-AllowDNS                    = ["Inbound", "Allow", "*", "*", "53", "AllowDNS"]
-    ActiveDirectory-AllowKerberosAuthentication = ["Inbound", "Allow", "*", "*", "88", "AllowKerberosAuthentication"]
-    ActiveDirectory-AllowADReplicationTrust     = ["Inbound", "Allow", "*", "*", "445", "AllowADReplicationTrust"]
-    ActiveDirectory-AllowSMTPReplication        = ["Inbound", "Allow", "TCP", "*", "25", "AllowSMTPReplication"]
-    ActiveDirectory-AllowRPCReplication         = ["Inbound", "Allow", "TCP", "*", "135", "AllowRPCReplication"]
-    ActiveDirectory-AllowFileReplication        = ["Inbound", "Allow", "TCP", "*", "5722", "AllowFileReplication"]
-    ActiveDirectory-AllowWindowsTime            = ["Inbound", "Allow", "UDP", "*", "123", "AllowWindowsTime"]
-    ActiveDirectory-AllowPasswordChangeKerberes = ["Inbound", "Allow", "*", "*", "464", "AllowPasswordChangeKerberes"]
-    ActiveDirectory-AllowDFSGroupPolicy         = ["Inbound", "Allow", "UDP", "*", "138", "AllowDFSGroupPolicy"]
-    ActiveDirectory-AllowADDSWebServices        = ["Inbound", "Allow", "TCP", "*", "9389", "AllowADDSWebServices"]
-    ActiveDirectory-AllowNETBIOSAuthentication  = ["Inbound", "Allow", "UDP", "*", "137", "AllowNETBIOSAuthentication"]
-    ActiveDirectory-AllowNETBIOSReplication     = ["Inbound", "Allow", "TCP", "*", "139", "AllowNETBIOSReplication"]
+    ActiveDirectory-AllowADReplication          = { direction = "Inbound", access = "Allow", protocol = "*", ports = ["389"], description = "AllowADReplication" }
+    ActiveDirectory-AllowADReplicationSSL       = { direction = "Inbound", access = "Allow", protocol = "*", ports = ["636"], description = "AllowADReplicationSSL" }
+    ActiveDirectory-AllowADGCReplication        = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["3268"], description = "AllowADGCReplication" }
+    ActiveDirectory-AllowADGCReplicationSSL     = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["3269"], description = "AllowADGCReplicationSSL" }
+    ActiveDirectory-AllowDNS                    = { direction = "Inbound", access = "Allow", protocol = "*", ports = ["53"], description = "AllowDNS" }
+    ActiveDirectory-AllowKerberosAuthentication = { direction = "Inbound", access = "Allow", protocol = "*", ports = ["88"], description = "AllowKerberosAuthentication" }
+    ActiveDirectory-AllowADReplicationTrust     = { direction = "Inbound", access = "Allow", protocol = "*", ports = ["445"], description = "AllowADReplicationTrust" }
+    ActiveDirectory-AllowSMTPReplication        = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["25"], description = "AllowSMTPReplication" }
+    ActiveDirectory-AllowRPCReplication         = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["135"], description = "AllowRPCReplication" }
+    ActiveDirectory-AllowFileReplication        = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["5722"], description = "AllowFileReplication" }
+    ActiveDirectory-AllowWindowsTime            = { direction = "Inbound", access = "Allow", protocol = "Udp", ports = ["123"], description = "AllowWindowsTime" }
+    ActiveDirectory-AllowPasswordChangeKerberes = { direction = "Inbound", access = "Allow", protocol = "*", ports = ["464"], description = "AllowPasswordChangeKerberes" }
+    ActiveDirectory-AllowDFSGroupPolicy         = { direction = "Inbound", access = "Allow", protocol = "Udp", ports = ["138"], description = "AllowDFSGroupPolicy" }
+    ActiveDirectory-AllowADDSWebServices        = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["9389"], description = "AllowADDSWebServices" }
+    ActiveDirectory-AllowNETBIOSAuthentication  = { direction = "Inbound", access = "Allow", protocol = "Udp", ports = ["137"], description = "AllowNETBIOSAuthentication" }
+    ActiveDirectory-AllowNETBIOSReplication     = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["139"], description = "AllowNETBIOSReplication" }
 
     #Cassandra
-    Cassandra = ["Inbound", "Allow", "TCP", "*", "9042", "Cassandra"]
+    Cassandra = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["9042"], description = "Cassandra" }
 
     #Cassandra-JMX
-    Cassandra-JMX = ["Inbound", "Allow", "TCP", "*", "7199", "Cassandra-JMX"]
+    Cassandra-JMX = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["7199"], description = "Cassandra-JMX" }
 
     #Cassandra-Thrift
-    Cassandra-Thrift = ["Inbound", "Allow", "TCP", "*", "9160", "Cassandra-Thrift"]
+    Cassandra-Thrift = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["9160"], description = "Cassandra-Thrift" }
 
     #CouchDB
-    CouchDB = ["Inbound", "Allow", "TCP", "*", "5984", "CouchDB"]
+    CouchDB = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["5984"], description = "CouchDB" }
 
     #CouchDB-HTTPS
-    CouchDB-HTTPS = ["Inbound", "Allow", "TCP", "*", "6984", "CouchDB-HTTPS"]
+    CouchDB-HTTPS = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["6984"], description = "CouchDB-HTTPS" }
 
     #DNS-TCP
-    DNS-TCP = ["Inbound", "Allow", "TCP", "*", "53", "DNS-TCP"]
+    DNS-TCP = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["53"], description = "DNS-TCP" }
 
     #DNS-UDP
-    DNS-UDP = ["Inbound", "Allow", "UDP", "*", "53", "DNS-UDP"]
+    DNS-UDP = { direction = "Inbound", access = "Allow", protocol = "Udp", ports = ["53"], description = "DNS-UDP" }
 
     #DynamicPorts
-    DynamicPorts = ["Inbound", "Allow", "TCP", "*", "49152-65535", "DynamicPorts"]
+    DynamicPorts = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["49152-65535"], description = "DynamicPorts" }
 
     #ElasticSearch
-    ElasticSearch = ["Inbound", "Allow", "TCP", "*", "9200-9300", "ElasticSearch"]
+    ElasticSearch = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["9200-9300"], description = "ElasticSearch" }
 
     #FTP
-    FTP = ["Inbound", "Allow", "TCP", "*", "21", "FTP"]
+    FTP = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["21"], description = "FTP" }
 
     #HTTP
-    HTTP = ["Inbound", "Allow", "TCP", "*", "80", "HTTP"]
+    HTTP = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["80"], description = "HTTP" }
 
     #HTTPS
-    HTTPS = ["Inbound", "Allow", "TCP", "*", "443", "HTTPS"]
+    HTTPS = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["443"], description = "HTTPS" }
 
     #IMAP
-    IMAP = ["Inbound", "Allow", "TCP", "*", "143", "IMAP"]
+    IMAP = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["143"], description = "IMAP" }
 
     #IMAPS
-    IMAPS = ["Inbound", "Allow", "TCP", "*", "993", "IMAPS"]
+    IMAPS = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["993"], description = "IMAPS" }
 
     #Kestrel
-    Kestrel = ["Inbound", "Allow", "TCP", "*", "22133", "Kestrel"]
+    Kestrel = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["22133"], description = "Kestrel" }
 
     #LDAP
-    LDAP = ["Inbound", "Allow", "TCP", "*", "389", "LDAP"]
+    LDAP = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["389"], description = "LDAP" }
 
     #MongoDB
-    MongoDB = ["Inbound", "Allow", "TCP", "*", "27017", "MongoDB"]
+    MongoDB = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["27017"], description = "MongoDB" }
 
     #Memcached
-    Memcached = ["Inbound", "Allow", "TCP", "*", "11211", "Memcached"]
+    Memcached = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["11211"], description = "Memcached" }
 
     #MSSQL
-    MSSQL = ["Inbound", "Allow", "TCP", "*", "1433", "MSSQL"]
+    MSSQL = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["1433"], description = "MSSQL" }
 
     #MySQL
-    MySQL = ["Inbound", "Allow", "TCP", "*", "3306", "MySQL"]
+    MySQL = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["3306"], description = "MySQL" }
 
     #Neo4J
-    Neo4J = ["Inbound", "Allow", "TCP", "*", "7474", "Neo4J"]
+    Neo4J = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["7474"], description = "Neo4J" }
 
     #POP3
-    POP3 = ["Inbound", "Allow", "TCP", "*", "110", "POP3"]
+    POP3 = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["110"], description = "POP3" }
 
     #POP3S
-    POP3S = ["Inbound", "Allow", "TCP", "*", "995", "POP3S"]
+    POP3S = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["995"], description = "POP3S" }
 
     #PostgreSQL
-    PostgreSQL = ["Inbound", "Allow", "TCP", "*", "5432", "PostgreSQL"]
+    PostgreSQL = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["5432"], description = "PostgreSQL" }
 
     #RabbitMQ
-    RabbitMQ = ["Inbound", "Allow", "TCP", "*", "5672", "RabbitMQ"]
+    RabbitMQ = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["5672"], description = "RabbitMQ" }
 
     #RDP
-    RDP = ["Inbound", "Allow", "TCP", "*", "3389", "RDP"]
+    RDP = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["3389"], description = "RDP" }
 
     #Redis
-    Redis = ["Inbound", "Allow", "TCP", "*", "6379", "Redis"]
+    Redis = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["6379"], description = "Redis" }
 
     #Riak
-    Riak = ["Inbound", "Allow", "TCP", "*", "8093", "Riak"]
+    Riak = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["8093"], description = "Riak" }
 
     #Riak-JMX
-    Riak-JMX = ["Inbound", "Allow", "TCP", "*", "8985", "Riak-JMX"]
+    Riak-JMX = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["8985"], description = "Riak-JMX" }
 
     #SMTP
-    SMTP = ["Inbound", "Allow", "TCP", "*", "25", "SMTP"]
+    SMTP = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["25"], description = "SMTP" }
 
     #SMTPS
-    SMTPS = ["Inbound", "Allow", "TCP", "*", "465", "SMTPS"]
+    SMTPS = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["465"], description = "SMTPS" }
 
     #SSH
-    SSH = ["Inbound", "Allow", "TCP", "*", "22", "SSH"]
+    SSH = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["22"], description = "SSH" }
 
     #WinRM
-    WinRM = ["Inbound", "Allow", "TCP", "*", "5986", "WinRM"]
+    WinRM = { direction = "Inbound", access = "Allow", protocol = "Tcp", ports = ["5986"], description = "WinRM" }
   }
 }
