@@ -13,4 +13,4 @@
 
 ### Copyright
 
-Copyright © 2023 Coalfire Systems Inc.
+Copyright © 2026 Coalfire Systems Inc.
