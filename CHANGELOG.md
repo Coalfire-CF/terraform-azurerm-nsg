@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.1](https://github.com/Coalfire-CF/terraform-azurerm-nsg/compare/v3.0.0...v3.0.1) (2026-11-06)
+
+
+### Documentation
+
+* wrap Markdown lines at 120 characters (Coalfire-CF/Actions[#375](https://github.com/Coalfire-CF/terraform-azurerm-nsg/issues/375)) ([#139](https://github.com/Coalfire-CF/terraform-azurerm-nsg/issues/139)) ([1d2b93a](https://github.com/Coalfire-CF/terraform-azurerm-nsg/commit/1d2b93aa501238e4be8337481c3f9cc09aa3d830))
+
 ## [3.0.0](https://github.com/Coalfire-CF/terraform-azurerm-nsg/compare/v2.0.1...v3.0.0) (2026-10-21)
 
 
