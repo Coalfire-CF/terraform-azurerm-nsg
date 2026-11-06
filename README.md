@@ -5,7 +5,8 @@
 # terraform-azurerm-nsg
 
 This module creates a Network Security Group (NSG) with predefined and custom rules, a final DenyAll
-rule, and diagnostic settings. It is used in the [Coalfire-Azure-RAMPpak](https://github.com/Coalfire-CF/Coalfire-Azure-RAMPpak) FedRAMP framework.
+rule, and diagnostic settings. It is used in the
+[Coalfire-Azure-RAMPpak](https://github.com/Coalfire-CF/Coalfire-Azure-RAMPpak) FedRAMP framework.
 
 Learn more at [Coalfire OpenSource](https://coalfire.com/opensource).
 
@@ -20,13 +21,15 @@ Learn more at [Coalfire OpenSource](https://coalfire.com/opensource).
 - Predefined rules, picked by name from the catalog in `rules.tf`
 - Custom rules
 - DenyAll inbound rule at priority 4096
-- Diagnostic settings, through [terraform-azurerm-diagnostics](https://github.com/Coalfire-CF/terraform-azurerm-diagnostics)
+- Diagnostic settings, through
+  [terraform-azurerm-diagnostics](https://github.com/Coalfire-CF/terraform-azurerm-diagnostics)
 
 ## Secure defaults
 
 - With no rule inputs the NSG has only the DenyAll inbound rule.
 - Predefined rules take their source from `source_address_prefixes`, which defaults to `VirtualNetwork`, not `*`.
-- A rule that allows port 22, 3389, 5985 or 5986 from `*`, `Any`, `Internet`, or any `/0` prefix such as `0.0.0.0/0` or `::/0` fails at plan time.
+- A rule that allows port 22, 3389, 5985 or 5986 from `*`, `Any`, `Internet`, or any `/0` prefix such as `0.0.0.0/0` or
+  `::/0` fails at plan time.
 - Custom rules must name a source and a destination port. There is no wildcard default for either.
 - Rule names and priorities must be unique. Priorities run from 100 to 4095.
 
